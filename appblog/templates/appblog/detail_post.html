@@ -1,0 +1,15 @@
+{% extends 'appblog/base.html' %}
+
+{% block main %}
+<h1>Detail Post Page</h1>
+
+<div>
+
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content| linebreaks }}</p>
+    <span>{{ post.author }}</span>
+    <span>{{ post.create_time }}</span>
+
+</div>
+
+{% endblock %}
