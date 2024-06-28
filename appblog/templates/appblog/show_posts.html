@@ -1,18 +1,23 @@
 {% extends 'appblog/base.html' %}
 
 {% block main %}
-<h1>Show Posts Page</h1>
+<h1 class="text-center">Show Posts Page</h1>
 
 <div>
 {% if posts %}
 {% for post in posts %}
-<div>
-
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.content| linebreaks| truncatewords:20 }}</p>
-    <span>{{ post.author }}</span>
-    <span>{{ post.create_time }}</span>
-    <a href="{% url 'detail' post_id=post.pk %}">Read more</a>
+<div class="card text-center mb-4">
+    <div class="card-title mt-2">
+        <h3>{{ post.title }}</h3>
+        <hr>
+    </div>
+    <div class="card-body">
+        <p>{{ post.content| linebreaks| truncatewords:20 }}</p>
+        <hr>
+        <span>{{ post.author }}</span>
+        <span>{{ post.create_time }}</span>
+        <a href="{% url 'detail' post_id=post.pk %}"><button type="button" class="btn btn-info ml-1">Read more</button></a>
+    </div>
  
 </div>
 {% endfor %}

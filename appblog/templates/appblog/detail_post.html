@@ -3,13 +3,17 @@
 {% block main %}
 <h1>Detail Post Page</h1>
 
-<div>
-
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content| linebreaks }}</p>
-    <span>{{ post.author }}</span>
-    <span>{{ post.create_time }}</span>
-
+<div class="card text-center mb-6">
+    <div class="card-title mt-2">
+        <h2>{{ post.title }}</h2>
+        <hr>
+    </div>
+    <div class="card-body">
+        <p>{{ post.content| linebreaks }}</p>
+        <hr>
+        <span>{{ post.author }}</span>
+        <span>{{ post.create_time }}</span>
+    </div>
 </div>
 
 {% endblock %}
