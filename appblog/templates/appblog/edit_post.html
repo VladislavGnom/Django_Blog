@@ -1,0 +1,22 @@
+{% extends 'appblog/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+<h1>Edit Post Page</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-success" type="submit">Update</button>
+</form>
+
+
+<h3 class="mt-5">Delete Post:</h3>
+<form action="{% url 'delete_post' post_id=post.pk %}" method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Delete post</button>
+</form>
+
+
+{% endblock %}
