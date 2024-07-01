@@ -1,5 +1,7 @@
 {% extends 'appblog/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block main %}
 <h1>Detail Post Page</h1>
 
@@ -15,5 +17,33 @@
         <span>{{ post.create_time }}</span>
     </div>
 </div>
+
+<!-- post_comment -->
+<div class="mx-auto col-12">
+    <div class="post-comments">
+        <h2>Comments:</h2>
+        {% if not post.comments.all %}
+            <div>No comments right now.</div>
+        {% else %}
+            {% for comment in post.comments.all %}
+                <div class="comment">
+                    <p class="bg-info">{{ comment.author }} {{ comment.created_time }}</p>
+                    <p class="bg-dark text-white">{{ comment.text }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <div class="comment-form">
+        <h2>Write comment:</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success" type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
