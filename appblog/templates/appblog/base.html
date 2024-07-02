@@ -21,7 +21,7 @@
             </li>
             </ul>
             {% if request.user.is_authenticated %}
-                <span class="btn btn-light m-1 p-1">Hello {{ request.user.first_name }}</span>, 
+                <span class="btn btn-light m-1 p-1">Hello {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}</span>, 
                 <a href="{% url 'logout' %}"><button type="submit" class="btn btn-light">Logout</button></a>
             {% else %}
                 <a href="{% url 'login' %}"><button class="btn btn-light">Log-in</button></a>

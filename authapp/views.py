@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .forms import UserRegisterForm
 
 
@@ -22,3 +23,9 @@ def register(request):
         user_form = UserRegisterForm()
     
     return render(request, 'authapp/register.html', {'user_form': user_form})
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return render(request, 'registration/logged_out.html')

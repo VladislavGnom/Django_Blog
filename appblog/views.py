@@ -45,7 +45,7 @@ def edit_post(request, post_id):
     post = get_object_or_404(models.Post, pk=post_id)
 
     if request.method == "POST":
-        edit_form = EditPostForm(request.POST)
+        edit_form = EditPostForm(data=request.POST, instance=post)
 
         if edit_form.is_valid():
             post.title = edit_form.data.get('title')
@@ -55,7 +55,7 @@ def edit_post(request, post_id):
 
             return redirect('edit_post', post_id=post.pk)
     else:
-        edit_form = EditPostForm()
+        edit_form = EditPostForm(instance=post)
 
     context = {'title': 'Edit Post',
                'form': edit_form,
