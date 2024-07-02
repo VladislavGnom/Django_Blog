@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from . import models
-from .forms import CommentForm, EditPostForm
+from .forms import CommentForm, EditPostForm, CreatePostForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -79,7 +79,7 @@ def delete_post(request, post_id):
 @login_required
 def create_post(request):
     if request.method == "POST":
-        create_form = EditPostForm(request.POST)
+        create_form = CreatePostForm(request.POST)
 
         if create_form.is_valid():
             new_post = create_form.save(commit=False)
@@ -88,7 +88,7 @@ def create_post(request):
 
             return redirect('show')
     else:
-        create_form = EditPostForm()
+        create_form = CreatePostForm()
 
     context = {'title': 'Create Post',
                'form': create_form,
