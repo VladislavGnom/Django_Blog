@@ -73,7 +73,7 @@ def delete_post(request, post_id):
     if request.method == 'POST':
         post.delete()
 
-    return redirect('show')
+    return redirect('user_posts', username=request.user)
 
 
 @login_required
@@ -86,7 +86,7 @@ def create_post(request):
             new_post.author = request.user
             new_post.save()
 
-            return redirect('show')
+            return redirect('user_posts', username=request.user)
     else:
         create_form = CreatePostForm()
 
@@ -95,3 +95,13 @@ def create_post(request):
                }
     return render(request, 'appblog/create_post.html', context=context)
 
+
+
+def user_post_display(request, username):
+    posts = models.Post.objects.filter(author=request.user)
+
+    context = {'title': 'All Posts',
+               'posts': posts,
+               }
+
+    return render(request, 'appblog/user_post_display.html', context=context)

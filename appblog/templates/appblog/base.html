@@ -22,6 +22,7 @@
             </ul>
             {% if request.user.is_authenticated %}
                 <span class="btn btn-light m-1 p-1">Hello {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user.username }}{% endif %}</span>, 
+                <a class="mr-2" href="{% url 'user_posts' username=request.user %}"><button type="submit" class="btn btn-light">My Posts</button></a>
                 <a href="{% url 'logout' %}"><button type="submit" class="btn btn-light">Logout</button></a>
             {% else %}
                 <a href="{% url 'login' %}"><button class="btn btn-light">Log-in</button></a>
@@ -36,6 +37,21 @@
         {% block main %}
         {% endblock %}
     </div>
+
+    <!-- <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+          <div class="col-12 col-md">
+            <a class="navbar-brand text-dark" href="{% url 'index' %}">Blog</a>
+            <small class="d-block mb-3 text-muted">Copyright © 2024</small>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="{% url 'show' %}">Home</a></li>
+            </ul>
+          </div>
+        </div>
+    </footer> -->
 
 </body>
 </html>

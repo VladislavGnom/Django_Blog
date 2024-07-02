@@ -1,0 +1,28 @@
+{% extends 'appblog/base.html' %}
+
+{% block main %}
+<h1 class="text-center mb-3">All Your Posts  <a class="ml-5" href="{% url 'create_post' %}"><button class="btn btn-warning">Create Post</button></a></h1>
+
+<div>
+{% if posts %}
+{% for post in posts %}
+<div class="card text-center mb-4">
+    <div class="card-title mt-2">
+        <h3><a href="{% url 'edit_post' post_id=post.pk %}">{{ post.title }}</a></h3>
+        <hr>
+    </div>
+    <div class="card-body">
+        <span>{{ post.author }}</span>
+        <span>{{ post.create_time }}</span>
+        <form action="{% url 'delete_post' post_id=post.pk %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Delete post</button>
+        </form> 
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<h2>Not found posts. Add them!</h2>
+{% endif %}
+</div>
+{% endblock %}
