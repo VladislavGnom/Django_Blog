@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
 from . import models
 from .forms import CommentForm, EditPostForm, CreatePostForm
 from django.contrib.auth.decorators import login_required
@@ -44,25 +45,28 @@ def detail_post(request, post_id):
 def edit_post(request, post_id):
     post = get_object_or_404(models.Post, pk=post_id)
 
-    if request.method == "POST":
-        edit_form = EditPostForm(data=request.POST, instance=post)
+    if post.author == request.user:
+        if request.method == "POST":
+            edit_form = EditPostForm(data=request.POST, instance=post)
 
-        if edit_form.is_valid():
-            post.title = edit_form.data.get('title')
-            post.content = edit_form.data.get('content')
-            
-            post.save()
+            if edit_form.is_valid():
+                post.title = edit_form.data.get('title')
+                post.content = edit_form.data.get('content')
+                
+                post.save()
 
-            return redirect('edit_post', post_id=post.pk)
+                return redirect('edit_post', post_id=post.pk)
+        else:
+            edit_form = EditPostForm(instance=post)
+
+        context = {'title': 'Edit Post',
+                'form': edit_form,
+                'post': post,
+                }
+
+        return render(request, 'appblog/edit_post.html', context=context)
     else:
-        edit_form = EditPostForm(instance=post)
-
-    context = {'title': 'Edit Post',
-               'form': edit_form,
-               'post': post,
-               }
-
-    return render(request, 'appblog/edit_post.html', context=context)
+        return HttpResponseForbidden("<h1>403 Forbidden</h1>")
 
 
 @login_required
